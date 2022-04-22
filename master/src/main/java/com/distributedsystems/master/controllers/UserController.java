@@ -19,10 +19,19 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    UserResource createNewUser(@RequestBody @Valid UserResource userResource,
+    UserResource createUser(@RequestBody @Valid UserResource userResource,
                                @RequestHeader("x-client-host") String host){
 
         final UserResource updateUserResource = userService.createNewUser(userResource);
+        connectionStatusService.markConnectionStatusOnline(userResource.getEmail(), host);
+        return updateUserResource;
+    }
+
+    @PutMapping
+    UserResource updateUser(@RequestBody @Valid UserResource userResource,
+                               @RequestHeader("x-client-host") String host){
+
+        final UserResource updateUserResource = userService.updateUser(userResource);
         connectionStatusService.markConnectionStatusOnline(userResource.getEmail(), host);
         return updateUserResource;
     }

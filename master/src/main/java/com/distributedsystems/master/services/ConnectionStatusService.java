@@ -20,6 +20,7 @@ public class ConnectionStatusService {
     private String heartBeatEndpoint;
 
     private void markConnectionStatus(final String email, final String host, final ConnectionStatus connectionStatus) {
+        log.info("Updating connection status: {} for user: {}", connectionStatus, email);
         final Optional<ConnectionStatusEntity> optConnectionStatus = connectionStatusRepository.findFirstByUserEmail(email);
         if (optConnectionStatus.isPresent()) {
             final ConnectionStatusEntity connectionStatusEntity = optConnectionStatus.get();
