@@ -1,0 +1,11 @@
+
+server:
+  port: "0"
+
+
+spring:
+  data:
+    mongodb:
+      database: test-distributed-systems
+      uri: mongodb+srv://aneeta:DIHEinstitute2@cluster0.sq9cc.mongodb.net/distributed-systems?retryWrites=true&w=majority
+      auto-index-creation: true
