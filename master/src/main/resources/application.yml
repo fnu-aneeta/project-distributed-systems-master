@@ -1,0 +1,17 @@
+server:
+  port: 9090
+
+
+spring:
+  data:
+    mongodb:
+      database: test-distributed-systems
+      uri: mongodb+srv://aneeta:DIHEinstitute2@cluster0.sq9cc.mongodb.net/distributed-systems?retryWrites=true&w=majority
+      auto-index-creation: true
+
+
+app:
+  config:
+    heartbeat:
+      interval: 500000
+      endpoint: /actuator/health
