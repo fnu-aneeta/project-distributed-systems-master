@@ -44,6 +44,7 @@ public class ConnectMasterService {
             log.info("User {} is connected with master", userResource.getEmail());
         }catch (ResourceAccessException e){
             log.error("Unable to build connection with master: {}", e.getMessage());
+            e.printStackTrace();
         }
 
     }
