@@ -2,15 +2,13 @@ package com.distributedsystems.master.services;
 
 import com.distributedsystems.master.entities.UserEntity;
 import com.distributedsystems.master.exceptions.UserAlreadyExistsException;
-import com.distributedsystems.master.model.UserResource;
+import com.distributedsystems.master.resources.UserResource;
 import com.distributedsystems.master.repos.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -44,7 +42,6 @@ public class UserService {
 
 
     public UserResource updateUser(UserResource userResource) {
-        log.info("Updating user: {}", userResource.getEmail());
         Optional<UserEntity> optUserEntity = this.userRepository.findFirstByEmail(userResource.getEmail());
         UserEntity userEntity = new UserEntity();
         if (optUserEntity.isPresent()) {

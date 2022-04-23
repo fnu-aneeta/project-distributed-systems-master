@@ -1,6 +1,6 @@
 package com.distributedsystems.master.controllers;
 
-import com.distributedsystems.master.model.UserResource;
+import com.distributedsystems.master.resources.UserResource;
 import com.distributedsystems.master.services.ConnectionStatusService;
 import com.distributedsystems.master.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,19 +20,21 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     UserResource createUser(@RequestBody @Valid UserResource userResource,
-                               @RequestHeader("x-client-host") String host){
+                               @RequestHeader("x-client-ip") String clientIp,
+                            @RequestHeader("x-client-port") String clientPort) {
 
         final UserResource updateUserResource = userService.createNewUser(userResource);
-        connectionStatusService.markConnectionStatusOnline(userResource.getEmail(), host);
+        connectionStatusService.markConnectionStatusOnline(userResource.getEmail(), clientIp, clientPort);
         return updateUserResource;
     }
 
     @PutMapping
     UserResource updateUser(@RequestBody @Valid UserResource userResource,
-                               @RequestHeader("x-client-host") String host){
+                               @RequestHeader("x-client-ip") String clientIp,
+                            @RequestHeader("x-client-port") String clientPort){
 
         final UserResource updateUserResource = userService.updateUser(userResource);
-        connectionStatusService.markConnectionStatusOnline(userResource.getEmail(), host);
+        connectionStatusService.markConnectionStatusOnline(userResource.getEmail(), clientIp, clientPort);
         return updateUserResource;
     }
 }

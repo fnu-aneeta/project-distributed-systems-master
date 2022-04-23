@@ -1,11 +1,10 @@
-package com.distributedsystems.master.model;
+package com.distributedsystems.master.resources;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
-import java.util.Arrays;
 import java.util.List;
 
 @AllArgsConstructor

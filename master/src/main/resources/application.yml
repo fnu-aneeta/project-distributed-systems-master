@@ -11,7 +11,7 @@ spring:
 
 
 app:
-  config:
+  configs:
     heartbeat:
       interval: 500000
       endpoint: /actuator/health

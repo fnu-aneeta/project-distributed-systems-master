@@ -16,30 +16,35 @@ import java.util.Optional;
 public class ConnectionStatusService {
     private final ConnectionStatusRepository connectionStatusRepository;
 
-    @Value("${app.config.heartbeat.endpoint}")
+    @Value("${app.configs.heartbeat.endpoint}")
     private String heartBeatEndpoint;
 
-    private void markConnectionStatus(final String email, final String host, final ConnectionStatus connectionStatus) {
-        log.info("Updating connection status: {} for user: {}", connectionStatus, email);
+    private void markConnectionStatus(final String email,
+                                      final String clientIp,
+                                      final String clientPort,
+                                      final ConnectionStatus connectionStatus) {
+        log.info("User: {} is {}", email, connectionStatus);
         final Optional<ConnectionStatusEntity> optConnectionStatus = connectionStatusRepository.findFirstByUserEmail(email);
+        final String heartBeatUrl = String.format("%s:%s%s", clientIp, clientPort, heartBeatEndpoint);
         if (optConnectionStatus.isPresent()) {
             final ConnectionStatusEntity connectionStatusEntity = optConnectionStatus.get();
             connectionStatusEntity.setConnectionStatus(connectionStatus);
+            connectionStatusEntity.setHeartBeatUrl(heartBeatUrl);
             connectionStatusRepository.save(connectionStatusEntity);
         } else {
             connectionStatusRepository.save(ConnectionStatusEntity.builder()
                     .connectionStatus(connectionStatus)
                     .userEmail(email)
-                    .heartBeatUrl(String.format("%s%s", host, heartBeatEndpoint))
+                    .heartBeatUrl(heartBeatUrl)
                     .build());
         }
     }
 
-    public void markConnectionStatusOnline(final String email, final String host) {
-        markConnectionStatus(email, host, ConnectionStatus.ONLINE);
+    public void markConnectionStatusOnline(final String email, final String clientIp, final String clientPort) {
+        markConnectionStatus(email, clientIp, clientPort, ConnectionStatus.ONLINE);
     }
 
-    public void markConnectionStatusOffline(final String email, final String host) {
-        markConnectionStatus(email, host, ConnectionStatus.OFFLINE);
+    public void markConnectionStatusOffline(final String email, final String clientIp, final String clientPort) {
+        markConnectionStatus(email, clientIp, clientPort, ConnectionStatus.OFFLINE);
     }
 }

@@ -12,7 +12,7 @@ import java.util.Date;
 public class HeartBeatScheduler {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-    @Scheduled(fixedRateString = "${app.config.heartbeat.interval}")
+    @Scheduled(fixedRateString = "${app.configs.heartbeat.interval}")
     public void reportCurrentTime() {
         log.info("The time is now {}", dateFormat.format(new Date()));
     }
