@@ -1,7 +1,7 @@
 package com.distributedsystems.master.services;
 
-import com.distributedsystems.master.entities.ClientConnectionDetailsEntity;
 import com.distributedsystems.master.enums.ConnectionStatus;
+import com.distributedsystems.master.resources.UserConnectionDetailsResource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
@@ -17,19 +17,19 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class HeartBeatService {
-    private final ConnectionStatusService connectionStatusService;
+    private final UserConnectionDetailsService userConnectionDetailsService;
     private final RestTemplate restTemplate;
 
-    public void checkAllClientsHeartBeat() {
-        final List<ClientConnectionDetailsEntity> clientsConnection = connectionStatusService.findAllClientsConnectionDetails();
-        if (ObjectUtils.isEmpty(clientsConnection)) {
+    public void checkAllUsersHeartBeat() {
+        final List<UserConnectionDetailsResource> usersConnectionDetails = userConnectionDetailsService.findAllUsersConnectionDetails();
+        if (ObjectUtils.isEmpty(usersConnectionDetails)) {
             return;
         }
 
-        log.info("Total number of clients: {}", clientsConnection.size());
-        clientsConnection.forEach(clientConnectionDetails -> {
-            final ConnectionStatus connectionStatus = findConnectionStatus(clientConnectionDetails.getHeartBeatUrl());
-            connectionStatusService.updateConnectionStatus(clientConnectionDetails, connectionStatus);
+        log.info("Total number of users: {}", usersConnectionDetails.size());
+        usersConnectionDetails.forEach(userConnectionDetails -> {
+            final ConnectionStatus connectionStatus = findConnectionStatus(userConnectionDetails.getHeartBeatUrl());
+            userConnectionDetailsService.updateConnectionStatus(userConnectionDetails, connectionStatus);
         });
     }
 

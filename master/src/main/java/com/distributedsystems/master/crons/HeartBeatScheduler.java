@@ -16,8 +16,8 @@ public class HeartBeatScheduler {
     private final HeartBeatService heartBeatService;
 
     @Scheduled(fixedRateString = "${app.configs.heartbeat.interval}")
-    public void checkClientsHeartBeat() {
-        log.info("Scheduled Job: Checking client's heat beat.");
-        heartBeatService.checkAllClientsHeartBeat();
+    public void checkUsersHeartBeat() {
+        log.info("Scheduled Job: Checking user's heat beat.");
+        heartBeatService.checkAllUsersHeartBeat();
     }
 }
