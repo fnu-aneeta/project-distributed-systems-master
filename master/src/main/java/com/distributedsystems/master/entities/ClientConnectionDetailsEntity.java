@@ -19,8 +19,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 @Builder
-@Document(collection = "connection_status")
-public class ConnectionStatusEntity {
+@Document(collection = "client_connection_details")
+public class ClientConnectionDetailsEntity {
     @Id
     private String id;
 
