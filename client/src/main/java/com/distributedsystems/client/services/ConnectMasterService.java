@@ -29,8 +29,6 @@ public class ConnectMasterService {
 
     private final ClientConfigs clientConfigs;
 
-    private final ServletWebServerApplicationContext webServerAppCtxt;
-
     private void connectWithMaster() {
         final String resourceUrl = getUserRegisterUrl();
 
@@ -51,8 +49,6 @@ public class ConnectMasterService {
 
     @EventListener(ApplicationReadyEvent.class)
     public void onApplicationReady() {
-        int clientPort = webServerAppCtxt.getWebServer().getPort();
-        log.info("User: {} is running on ip: {}, port: {}", clientConfigs.getEmail(), clientConfigs.getIp(), clientPort);
         connectWithMaster();
     }
 
