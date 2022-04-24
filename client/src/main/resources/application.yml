@@ -12,6 +12,11 @@ spring:
 
 app:
   configs:
+    broker:
+      activemq:
+        url: "failover://tcp://localhost:61616"
+        username: "admin"
+        password: "password"
     client:
       ip: 127.0.0.1
       email: unknown@domain.com

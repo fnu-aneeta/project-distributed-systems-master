@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -39,8 +38,10 @@ public class ConnectMasterService {
                 .build();
         try {
             ResponseEntity<String> response = restTemplate.exchange(resourceUrl, HttpMethod.PUT, new HttpEntity<>(userResource), String.class);
-            log.info("User {} is connected with master", userResource.getEmail());
-        }catch (ResourceAccessException e){
+            if (response.getStatusCode().is2xxSuccessful()) {
+                log.info("User {} is connected with master", userResource.getEmail());
+            }
+        } catch (ResourceAccessException e) {
             log.error("Unable to build connection with master: {}", e.getMessage());
             e.printStackTrace();
         }
