@@ -46,10 +46,10 @@ public class HeartBeatService {
             }
         } catch (ResourceAccessException e) {
             log.error("Unable to build connection with master: {}", e.getMessage());
-            e.printStackTrace();
+           // e.printStackTrace();
         } catch (Exception e) {
             log.error("Unable to build connection with master: {}", e.getMessage());
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return ConnectionStatus.OFFLINE;
     }

@@ -12,6 +12,11 @@ spring:
 
 app:
   configs:
+    broker:
+      activemq:
+        url: "failover://tcp://localhost:61616"
+        username: "admin"
+        password: "password"
     heartbeat:
       interval: 100000
       endpoint: /actuator/health
